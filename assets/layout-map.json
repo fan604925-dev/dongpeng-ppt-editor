@@ -1,0 +1,110 @@
+{
+  "template_file": "东鹏集团PPT标准模板.pptx",
+  "layouts": {
+    "cover": {
+      "template_slide": 4,
+      "theme": "red",
+      "roles": {
+        "cover_title": {"name": "TextBox 3", "left": 35.95, "top": 180},
+        "cover_subtitle": {"name": "TextBox 4", "left": 35.95, "top": 233.94},
+        "cover_meta": {"name": "TextBox 5", "left": 371, "top": 476.85},
+        "copyright": {"name": "TextBox 18", "left": 35.95, "top": 479.3}
+      }
+    },
+    "contents": {
+      "template_slide": 5,
+      "theme": "light",
+      "roles": {
+        "title": {"name": "Rectangle 7", "left": 31.67, "top": 31.62},
+        "title_en": {"name": "textbox 8", "left": 43.02, "top": 88.29},
+        "item_1_number": {"left": 289.85, "top": 274.9},
+        "item_1_title": {"left": 289.85, "top": 321.35},
+        "item_2_number": {"left": 513.03, "top": 274.9},
+        "item_2_title": {"left": 513.03, "top": 321.35},
+        "item_3_number": {"left": 736.18, "top": 274.9},
+        "item_3_title": {"left": 736.18, "top": 321.35},
+        "item_4_number": {"left": 289.85, "top": 388.25},
+        "item_4_title": {"left": 289.85, "top": 434.7},
+        "item_5_number": {"left": 513.03, "top": 388.25},
+        "item_5_title": {"left": 513.03, "top": 434.7},
+        "item_6_number": {"left": 736.18, "top": 388.25},
+        "item_6_title": {"left": 736.18, "top": 434.7}
+      }
+    },
+    "section-red": {
+      "template_slide": 6,
+      "theme": "red",
+      "roles": {
+        "section_number": {"name": "TextBox 5", "left": 443.08, "top": 148.06},
+        "title": {"name": "TextBox 1", "left": 298.25, "top": 226.35},
+        "subtitle": {"name": "TextBox 2", "left": 385, "top": 308.75}
+      }
+    },
+    "statement": {
+      "template_slide": 7,
+      "theme": "light",
+      "roles": {
+        "section_label": {"name": "textbox 8", "left": 43, "top": 30.55},
+        "eyebrow": {"left": 209.85, "top": 181.55},
+        "statement": {"left": 125.9, "top": 234.75}
+      }
+    },
+    "image-text": {
+      "template_slide": 8,
+      "theme": "light",
+      "roles": {
+        "section_label": {"name": "textbox 8", "left": 43, "top": 30.55},
+        "title": {"left": 58.75, "top": 120.15},
+        "subtitle": {"left": 58.95, "top": 234.9},
+        "body": {"left": 58.85, "top": 272.1},
+        "hero_image": {"name": "Picture 3", "left": 420, "top": 0}
+      }
+    },
+    "map-chart": {"template_slide": 9, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 49.25, "top": 85.7}}},
+    "body-text": {
+      "template_slide": 11,
+      "theme": "light",
+      "roles": {
+        "section_label": {"left": 43, "top": 30.55},
+        "title": {"left": 148.08, "top": 120.75},
+        "subtitle": {"left": 156.08, "top": 220.65},
+        "body": {"left": 156.08, "top": 260.9}
+      }
+    },
+    "kpi-3": {
+      "template_slide": 12,
+      "theme": "light",
+      "roles": {
+        "section_label": {"left": 43, "top": 30.55},
+        "title": {"left": 49.25, "top": 71.05},
+        "intro": {"left": 486.9, "top": 71.05},
+        "kpi_1": {"left": 51, "top": 296.6},
+        "kpi_1_unit": {"left": 115.29, "top": 321.02},
+        "kpi_2": {"left": 308.9, "top": 296.55},
+        "kpi_2_unit": {"left": 429.42, "top": 320.97},
+        "kpi_3": {"left": 566.8, "top": 296.55},
+        "kpi_3_unit": {"left": 661.27, "top": 320.97}
+      }
+    },
+    "closing": {"template_slide": 13, "theme": "red", "roles": {}},
+    "section-light": {"template_slide": 16, "theme": "light", "roles": {"title": {"left": 298.25, "top": 222.6}}},
+    "three-columns": {"template_slide": 18, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 76.1, "top": 108.5}, "column_1_title": {"left": 84.5, "top": 195.7}, "column_1_body": {"left": 83.3, "top": 240.8}, "column_2_title": {"left": 378.1, "top": 195.7}, "column_2_body": {"left": 377, "top": 240.8}, "column_3_title": {"left": 671.8, "top": 195.7}, "column_3_body": {"left": 670.7, "top": 240.8}}},
+    "swot": {"template_slide": 19, "theme": "red", "roles": {"s_title": {"left": 240.2, "top": 130.85}, "s_body": {"left": 240.2, "top": 156.8}, "w_title": {"left": 580.5, "top": 130.85}, "w_body": {"left": 531.85, "top": 156.8}, "o_title": {"left": 240.2, "top": 330.3}, "o_body": {"left": 240.2, "top": 356.25}, "t_title": {"left": 580.5, "top": 330.3}, "t_body": {"left": 531.85, "top": 356.25}}},
+    "keyword-chain": {"template_slide": 21, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "center": {"left": 395.55, "top": 227.8}}},
+    "keyword-three": {"template_slide": 22, "theme": "red", "roles": {"title": {"left": 268.75, "top": 73.25}}},
+    "keyword-radial": {"template_slide": 23, "theme": "red", "roles": {}},
+    "keyword-formula": {"template_slide": 24, "theme": "light", "roles": {"left": {"left": 132.45, "top": 221}, "middle": {"left": 402, "top": 221}, "right": {"left": 669.5, "top": 221}}},
+    "image-pair": {"template_slide": 26, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 49.25, "top": 71.05}, "intro": {"left": 486.9, "top": 71.05}, "image_left": {"name": "Picture 2", "left": 43.5, "top": 262.45}, "image_right": {"name": "Picture 1", "left": 482, "top": 262.45}}},
+    "product-hero": {"template_slide": 27, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "hero_image": {"name": "Picture 5", "left": 0, "top": 0}}},
+    "product-matrix": {"template_slide": 28, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 45.55, "top": 63.8}, "product_1_image": {"left": 52.55, "top": 149.25}, "product_2_image": {"left": 221.15, "top": 149.25}, "product_3_image": {"left": 389.75, "top": 149.25}, "product_4_image": {"left": 558.35, "top": 267.3}, "product_5_image": {"left": 726.95, "top": 267.3}}},
+    "geometry": {"template_slide": 29, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}}},
+    "icon-four": {"template_slide": 31, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 49.25, "top": 71.05}, "intro": {"left": 486.9, "top": 71.05}}},
+    "table": {"template_slide": 32, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "table": {"name": "Table 1", "left": 40.85, "top": 80.95}}},
+    "stair-red": {"template_slide": 33, "theme": "red", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 41, "top": 99.45}, "body": {"left": 43.15, "top": 220.05}}},
+    "stair-light": {"template_slide": 34, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 41, "top": 99.45}, "body": {"left": 43.15, "top": 220.05}}},
+    "donut": {"template_slide": 35, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 58.75, "top": 120.15}, "chart": {"name": "Chart Placeholder 4", "left": 413.55, "top": 63}}},
+    "bars-timeline": {"template_slide": 36, "theme": "light", "roles": {"section_label": {"left": 43, "top": 30.55}, "title": {"left": 49.25, "top": 85.7}, "body": {"left": 51.4, "top": 165.05}}},
+    "icon-library-light": {"template_slide": 38, "theme": "light", "roles": {}},
+    "icon-library-red": {"template_slide": 39, "theme": "red", "roles": {}}
+  }
+}
