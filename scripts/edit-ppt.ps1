@@ -386,6 +386,29 @@ try {
                     }
                     Apply-Geometry -Shape $shape -Object $operation
                 }
+                'set_speaker_notes' {
+                    $slide = Find-SlideByOperation -Presentation $presentation -Operation $operation
+                    $notesText = if (Has-Property $operation 'text') { [string]$operation.text } else { '' }
+                    $notesShape = $null
+                    foreach ($candidate in $slide.NotesPage.Shapes) {
+                        try {
+                            if ($candidate.Type -eq 14 -and $candidate.PlaceholderFormat.Type -eq 2 -and $candidate.HasTextFrame -eq $msoTrue) {
+                                $notesShape = $candidate
+                                break
+                            }
+                        } catch { }
+                    }
+                    if ($null -eq $notesShape) {
+                        foreach ($candidate in $slide.NotesPage.Shapes) {
+                            if ($candidate.HasTextFrame -eq $msoTrue -and $candidate.Name -like '*Notes*') {
+                                $notesShape = $candidate
+                                break
+                            }
+                        }
+                    }
+                    if ($null -eq $notesShape) { throw "Speaker notes placeholder was not found on slide $($slide.SlideIndex)." }
+                    $notesShape.TextFrame.TextRange.Text = $notesText
+                }
                 'add_textbox' {
                     $slide = Find-SlideByOperation -Presentation $presentation -Operation $operation
                     $shape = $slide.Shapes.AddTextbox($msoTextOrientationHorizontal, [double]$operation.left, [double]$operation.top, [double]$operation.width, [double]$operation.height)
@@ -446,7 +469,7 @@ try {
                 }
                 'add_shape' {
                     $slide = Find-SlideByOperation -Presentation $presentation -Operation $operation
-                    $typeMap = @{ rectangle = 1; rounded_rectangle = 5; oval = 9; triangle = 7; hexagon = 10 }
+                    $typeMap = @{ rectangle = 1; rounded_rectangle = 5; oval = 9; triangle = 7; hexagon = 10; right_arrow = 33 }
                     $shapeType = if (Has-Property $operation 'shape_type' -and $operation.shape_type -is [string]) { $typeMap[([string]$operation.shape_type).ToLowerInvariant()] } else { [int]$operation.shape_type }
                     if ($null -eq $shapeType) { throw "Unknown shape_type '$($operation.shape_type)'." }
                     $shape = $slide.Shapes.AddShape($shapeType, [double]$operation.left, [double]$operation.top, [double]$operation.width, [double]$operation.height)

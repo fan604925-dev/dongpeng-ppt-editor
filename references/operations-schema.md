@@ -9,7 +9,8 @@
 5. 表格操作
 6. 导出操作
 7. 选择器
-8. 示例
+8. 候选版与正式版
+9. 示例
 
 ## 1. 顶层结构
 
@@ -62,6 +63,12 @@
 {"op":"add_textbox","slide":2,"left":60,"top":120,"width":320,"height":80,"text":"新文字","font":{"name":"微软雅黑","size":34,"color":"#000000"}}
 ```
 
+写入演讲者备注：
+
+```json
+{"op":"set_speaker_notes","slide":2,"text":"本页演讲稿内容"}
+```
+
 ## 4. 图片与对象操作
 
 替换模板图片：
@@ -92,6 +99,14 @@
 ```json
 {"op":"copy_shape_from_template","slide":2,"template_slide":38,"selector":{"left":121.1,"top":93.05},"left":80,"top":250,"width":40,"height":44}
 ```
+
+调整已有对象几何：
+
+```json
+{"op":"set_shape","slide":5,"selector":{"path":"Group 1/Straight Connector 7"},"top":208.35,"height":170}
+```
+
+`set_shape` 支持 `left`、`top`、`width`、`height`、`rotation`、`fill`、`line` 和 `z_order`。修改分隔线时同时修改同组对象，避免不同高度。
 
 ## 5. 表格操作
 
@@ -139,7 +154,23 @@
 
 先运行 `inspect-ppt.ps1` 获取准确对象路径与几何位置。
 
-## 8. 完整示例
+选择顺序：
+
+1. 已注册 `role`。
+2. `selector.path`，适合组内对象和同名对象。
+3. `name` + `left/top/tolerance`。
+4. `text_contains` 仅用于文字唯一且稳定时。
+
+## 8. 候选版与正式版
+
+- 初稿输出到独立候选路径，`overwrite:false`。
+- 候选版必须包含 `export_pdf` 和 `export_png`。
+- 视觉检查通过后，再把相同规范的输出路径改为正式文件。
+- 只有用户明确允许覆盖正式文件时使用 `overwrite:true`。
+- 不通过文件复制把候选版改名为正式版；正式版应由规范重新生成。
+- 跨 AI/跨机器时优先使用相对路径；相对路径以操作 JSON 所在目录为基准。
+
+## 9. 完整示例
 
 ```json
 {

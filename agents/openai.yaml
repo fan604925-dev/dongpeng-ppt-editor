@@ -1,6 +1,5 @@
 interface:
-  display_name: "东鹏 PPT 编辑器"
-  short_description: "按东鹏集团标准模板创建、编辑并导出可编辑 PPT"
+  display_name: "东鹏 PPT 100% 复刻编辑器"
+  short_description: "按集团模板创建、复刻、修改并校验可编辑 PPT"
   brand_color: "#E21413"
-  default_prompt: "Use $dongpeng-ppt-editor to create or edit an editable Dongpeng-standard PowerPoint and export a validated PDF."
-
+  default_prompt: "Use $dongpeng-ppt-editor to create or revise a fully editable Dongpeng-standard PPT, render a candidate, visually review every slide, and deliver a zero-warning PPTX and PDF."

@@ -24,7 +24,7 @@ function Convert-OfficeRgbToHex {
 function Visit-Shapes {
     param($Shapes, [int]$SlideIndex, [Collections.Generic.List[object]]$Warnings, [string]$LayoutId, [string]$ParentPath = '')
     $yahei = -join @([char]0x5FAE, [char]0x8F6F, [char]0x96C5, [char]0x9ED1)
-    $allowedColors = @('#E21413', '#000000', '#0D0D0D', '#FFFFFF', '#F9D0D0', '#F3A1A1', '#EE7271', '#F98A8A', '#FADBDF', '#B82020', '#F2F2F2', '#BFBFBF', '#D9D9D9', 'MIXED')
+    $allowedColors = @('#E21413', '#000000', '#0D0D0D', '#FFFFFF', '#F9D0D0', '#F3A1A1', '#EE7271', '#F98A8A', '#FADBDF', '#F0B6BA', '#B82020', '#F2F2F2', '#BFBFBF', '#D9D9D9', 'MIXED')
 
     for ($i = 1; $i -le $Shapes.Count; $i++) {
         $shape = $Shapes.Item($i)
