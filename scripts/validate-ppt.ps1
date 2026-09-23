@@ -21,8 +21,34 @@ function Convert-OfficeRgbToHex {
     return ('#{0:X2}{1:X2}{2:X2}' -f ($value -band 0xFF), (($value -shr 8) -band 0xFF), (($value -shr 16) -band 0xFF))
 }
 
+function Get-RedFillRegions {
+    param($Shapes, [string]$ParentPath = '')
+    $redColors = @('#E21413', '#B82020', '#EE7271', '#F98A8A', '#F3A1A1', '#F9D0D0', '#FADBDF', '#F0B6BA')
+    $regions = [Collections.Generic.List[object]]::new()
+    for ($i = 1; $i -le $Shapes.Count; $i++) {
+        $shape = $Shapes.Item($i)
+        $path = if ($ParentPath) { "$ParentPath/$($shape.Name)" } else { [string]$shape.Name }
+        $fillVisible = Safe { [int]$shape.Fill.Visible }
+        $fillColor = Convert-OfficeRgbToHex (Safe { $shape.Fill.ForeColor.RGB })
+        $fillTransparency = Safe { [double]$shape.Fill.Transparency }
+        if ($fillVisible -eq -1 -and $fillColor -in $redColors -and ($null -eq $fillTransparency -or $fillTransparency -lt 1)) {
+            $regions.Add([pscustomobject]@{
+                left = [double]$shape.Left
+                top = [double]$shape.Top
+                right = [double]$shape.Left + [double]$shape.Width
+                bottom = [double]$shape.Top + [double]$shape.Height
+                shape = $path
+            })
+        }
+        if ((Safe { [int]$shape.Type }) -eq 6) {
+            foreach ($region in (Get-RedFillRegions -Shapes $shape.GroupItems -ParentPath $path)) { $regions.Add($region) }
+        }
+    }
+    return $regions.ToArray()
+}
+
 function Visit-Shapes {
-    param($Shapes, [int]$SlideIndex, [Collections.Generic.List[object]]$Warnings, [string]$LayoutId, [string]$ParentPath = '')
+    param($Shapes, [int]$SlideIndex, [Collections.Generic.List[object]]$Warnings, [string]$LayoutId, [object[]]$RedRegions, [string]$ParentPath = '')
     $yahei = -join @([char]0x5FAE, [char]0x8F6F, [char]0x96C5, [char]0x9ED1)
     $allowedColors = @('#E21413', '#000000', '#0D0D0D', '#FFFFFF', '#F9D0D0', '#F3A1A1', '#EE7271', '#F98A8A', '#FADBDF', '#F0B6BA', '#B82020', '#F2F2F2', '#BFBFBF', '#D9D9D9', 'MIXED')
 
@@ -53,6 +79,15 @@ function Visit-Shapes {
             if ($fontColor -and $fontColor -notin $allowedColors) {
                 $Warnings.Add([ordered]@{ code = 'unexpected_text_color'; slide = $SlideIndex; shape = $path; message = "Unexpected text color '$fontColor'." })
             }
+            $textArea = [math]::Max(1, $width * $height)
+            foreach ($region in $RedRegions) {
+                $overlapWidth = [math]::Max(0, [math]::Min(($left + $width), $region.right) - [math]::Max($left, $region.left))
+                $overlapHeight = [math]::Max(0, [math]::Min(($top + $height), $region.bottom) - [math]::Max($top, $region.top))
+                if (($overlapWidth * $overlapHeight / $textArea) -ge 0.2 -and $fontColor -ne '#FFFFFF') {
+                    $Warnings.Add([ordered]@{ code = 'nonwhite_text_on_red'; slide = $SlideIndex; shape = $path; message = "Text color '$fontColor' overlaps red-filled shape '$($region.shape)'; all text on red backgrounds must be white (#FFFFFF)." })
+                    break
+                }
+            }
             $boundHeight = Safe { [double]$shape.TextFrame2.TextRange.BoundHeight }
             $boundWidth = Safe { [double]$shape.TextFrame2.TextRange.BoundWidth }
             if ($boundHeight -and $boundHeight -gt [math]::Max(($height * 1.3), ($height + 8))) {
@@ -67,7 +102,7 @@ function Visit-Shapes {
         }
 
         if ((Safe { [int]$shape.Type }) -eq 6) {
-            Visit-Shapes -Shapes $shape.GroupItems -SlideIndex $SlideIndex -Warnings $Warnings -LayoutId $LayoutId -ParentPath $path
+            Visit-Shapes -Shapes $shape.GroupItems -SlideIndex $SlideIndex -Warnings $Warnings -LayoutId $LayoutId -RedRegions $RedRegions -ParentPath $path
         }
     }
 }
@@ -77,6 +112,7 @@ if (-not (Test-Path -LiteralPath $resolvedInput)) { throw "Input '$resolvedInput
 
 $app = New-Object -ComObject PowerPoint.Application
 $presentation = $null
+$redThemeLayouts = @('cover', 'section-red', 'closing', 'swot', 'keyword-three', 'keyword-radial', 'stair-red', 'icon-library-red')
 try {
     $presentation = $app.Presentations.Open($resolvedInput, $msoTrue, 0, 0)
     $warnings = [Collections.Generic.List[object]]::new()
@@ -90,7 +126,17 @@ try {
 
     foreach ($slide in $presentation.Slides) {
         $layoutTag = Safe { [string]$slide.Tags.Item('dongpeng_layout') }
-        Visit-Shapes -Shapes $slide.Shapes -SlideIndex ([int]$slide.SlideIndex) -Warnings $warnings -LayoutId $layoutTag
+        $redRegions = @(Get-RedFillRegions -Shapes $slide.Shapes)
+        if ($layoutTag -in $redThemeLayouts) {
+            $redRegions += [pscustomobject]@{ left = 0; top = 0; right = 960; bottom = 540; shape = "red-theme layout '$layoutTag'" }
+        }
+        foreach ($backgroundFill in @((Safe { $slide.Background.Fill }), (Safe { $slide.CustomLayout.Background.Fill }))) {
+            $backgroundColor = Convert-OfficeRgbToHex (Safe { $backgroundFill.ForeColor.RGB })
+            if ($backgroundColor -in @('#E21413', '#B82020', '#EE7271', '#F98A8A', '#F3A1A1', '#F9D0D0', '#FADBDF', '#F0B6BA')) {
+                $redRegions += [pscustomobject]@{ left = 0; top = 0; right = 960; bottom = 540; shape = 'slide background' }
+            }
+        }
+        Visit-Shapes -Shapes $slide.Shapes -SlideIndex ([int]$slide.SlideIndex) -Warnings $warnings -LayoutId $layoutTag -RedRegions $redRegions
         if (-not $layoutTag) {
             $warnings.Add([ordered]@{ code = 'missing_layout_tag'; slide = [int]$slide.SlideIndex; shape = $null; message = 'Slide has no dongpeng_layout tag; use explicit inspection for legacy slides.' })
         }

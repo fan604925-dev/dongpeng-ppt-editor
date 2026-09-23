@@ -57,11 +57,15 @@
 
 可选字段：`left`、`top`、`width`、`height`、`rotation`、`margins`、`font`、`paragraph`。
 
+**红底强制规则：**红色背景、渐变、红色填充圆形/色块内的每个 `set_text`、`add_textbox` 和分组文字都必须显式设置 `font.color` 为 `#FFFFFF`。不能省略颜色让 PowerPoint 沿用原有黑字；也不能只改标题而漏掉编号或说明。
+
 新增文本框：
 
 ```json
 {"op":"add_textbox","slide":2,"left":60,"top":120,"width":320,"height":80,"text":"新文字","font":{"name":"微软雅黑","size":34,"color":"#000000"}}
 ```
+
+上例的黑字仅适用于白底页面；若文字位于红底或红色形状内，必须将 `color` 写为 `#FFFFFF`。
 
 写入演讲者备注：
 

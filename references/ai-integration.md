@@ -33,6 +33,7 @@
 6. 候选版通过后再生成正式 PPTX/PDF；
 7. 运行 validate-ppt.ps1，必须 0 warning；
 8. 交付可编辑 PPTX、PDF 和校验结果。
+9. 红色背景、红色渐变、红色填充圆形/色块内的全部文字必须显式设为白色 `#FFFFFF`；即使模板中原有黑字也必须改白，黑色、深灰和红色文字一律禁止。逐页预览确认没有漏改。
 不得从空白页自由设计，不得覆盖母模板，不得使用未登记字体和颜色。
 ```
 
@@ -63,4 +64,3 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "<SKILL_ROOT>\scripts\valida
 - 相对路径以 `operations.json` 所在目录为基准。
 - 跨机器共享时优先使用相对路径，不写用户目录和临时目录。
 - 必须在 Windows + Microsoft PowerPoint 环境执行最终生成；其他系统可负责生成 JSON、内容和审阅意见。
-
