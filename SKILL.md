@@ -25,6 +25,7 @@ description: Create, revise, replicate, inspect, render, and validate fully edit
 | 其他 AI 软件接入 | [ai-integration.md](references/ai-integration.md)、[operations-schema.md](references/operations-schema.md) |
 | 最终验收 | [quality-rubric.md](references/quality-rubric.md)、[validation-checklist.md](references/validation-checklist.md) |
 | 参考已验证案例 | [case-studies.md](references/case-studies.md) |
+| 设计结尾页 | [design-rules.md](references/design-rules.md)、[layout-catalog.md](references/layout-catalog.md)、[validation-checklist.md](references/validation-checklist.md) |
 
 ## 不可跳过的工作流
 
@@ -73,6 +74,7 @@ description: Create, revise, replicate, inspect, render, and validate fully edit
 - 先建立“页码 → 内容目标 → 注册版式 → 必要定制 → 风险点”表。
 - 复制模板结构，只替换内容；需要定制时保留品牌页眉、Logo、页脚、背景和几何语言。
 - 用候选版与参考页并排比较，按 [quality-rubric.md](references/quality-rubric.md) 达到全部硬门槛。
+- 结尾页遵循 `design-rules.md` 的“结尾页二选一”规则；Logo 模式与文字模式不得混用。
 
 ## 核心设计约束
 
@@ -94,6 +96,7 @@ description: Create, revise, replicate, inspect, render, and validate fully edit
 - 分栏竖线未覆盖对应文字高度，或不同竖线不等高。
 - 十字线穿过标题或正文。
 - 内容整体重心过低/过高，大片留白没有叙事作用。
+- 结尾页同时出现大 Logo 与正文，或 Logo 遮挡、挤压、干扰任何重要文字。
 - Logo、页脚、背景、字体或颜色偏离模板。
 - 只通过自动校验但没有逐页看预览图。
 
